@@ -17,7 +17,7 @@ def url_count(method: Callable) -> Callable:
     def wrapper(*args, **kwargs):
         url = args[0]
         redis_client.incr(f"count:{url}")
-        cached = redis_client.get(f"{url}")
+        cached = redis_client.get(url)
         if cached:
             return cached.decode("utf-8")
         result = method(*args, **kwargs)
@@ -26,7 +26,7 @@ def url_count(method: Callable) -> Callable:
 
     return wrapper
 
-
+@url_count
 def get_page(url: str) -> str:
     """Makes a http request to a given endpoint"""
     response = requests.get(url)
@@ -34,4 +34,4 @@ def get_page(url: str) -> str:
 
 
 if __name__ == "__main__":
-    get_page("http://slowwly.robertomurray.co.uk")
+    print(get_page("http://slowwly.robertomurray.co.uk/delay/5000/url/http://www.google.co.uk"))
