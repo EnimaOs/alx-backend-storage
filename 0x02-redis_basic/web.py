@@ -26,6 +26,7 @@ def url_count(method: Callable) -> Callable:
 
     return wrapper
 
+
 @url_count
 def get_page(url: str) -> str:
     """Makes a http request to a given endpoint"""
@@ -34,4 +35,4 @@ def get_page(url: str) -> str:
 
 
 if __name__ == "__main__":
-    print(get_page("http://slowwly.robertomurray.co.uk/delay/5000/url/http://www.google.co.uk"))
+    print(get_page("http://slowwly.robertomurray.co.uk"))
